@@ -1,0 +1,64 @@
+#
+#  In this example the records are "unqualified", which means they're
+# missing the name of the zone.  This is in contrast to the fully-qualified
+# records you'll find in "example.com".
+#
+#  In this case you can copy this file to multiple zones to have identical
+# records with no confusion.
+#
+#
+
+#
+#  The general form of the input is ":" deliminated records:
+#
+#   TYPE : NAME : VALUE : TTL
+#
+#  Where type is:
+#
+#   @ for MX.
+#   + for A.
+#   6 for AAAA.
+#   C for CNAME.
+#   T for TXT.
+
+
+#
+# MX record - route all incoming email for the domain "example.net"
+# to the host `mail.example.net`.
+#
+# NOTE we define mail-priority here, rather than TTL.
+#
+@:mail.example.net:15
+
+#
+# Although TTL can be added:
+#
+#    @example.net:mail.example.net:15:300
+#
+# All record types allow TTL to be added as the last-field.
+#
+
+
+#
+#  IPv4 records for the website
+#
++:80.68.84.103:300
++www:80.68.84.103:300
+
+#
+#  IPv6 records for the website - note the lack of ":" in the address.
+#
+6:200141c8010b01030000000000000010:300
+6www:200141c8010b01030000000000000010:300
+
+#
+# Now we define the address of `mail.example.net` which is
+# listed in the MX-record, and is the host to which mail will
+# be sent
+#
++mail:127.0.0.1:300
+
+#
+# A TXT record - NOTE That the value must be quoted.
+#
+Texample:"v=spf1 mx a ptr ip4:1.2.3.4 ?all":300
